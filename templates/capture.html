@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load django_bootstrap5 %}
+
+{% block title %}Capture{% endblock %}
+
+{% block content %}
+    <div class="col-lg-4"></div>
+    <div class="col-lg-4">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title">Capture</h3>
+                <form class="" role="form" action="" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="col-auto">
+                        <label for="user_id" class="form-label">User</label>
+                        <select id="user_id" class="form-control" name="user_id">
+                            {% for user in users %}
+                                <option value="{{ user.id }}">{{ user.first_name }} {{ user.last_name }}</option>
+                            {% endfor %}
+                        </select><br>
+                    </div>
+                    <input type="hidden" name="frame" id="frame" value="">
+                </form>
+                <div>
+                    <canvas id="canvas" class="d-none"></canvas>
+                    <video width="100%" class="d-none" autoplay></video>
+                    <button class="btn btn-outline-primary mt-2" onclick="openCamera()">Open Camera</button>
+                    <button id="capture" class="btn btn-outline-secondary mt-2 d-none" onclick="capture()">Capture
+                    </button>
+                    <button id="recognize" class="btn btn-outline-success mt-2 d-none" onclick="recognize()">Save
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascript %}
+    <script src="{% static 'js/camera.js' %}"></script>
+{% endblock %}

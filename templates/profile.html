@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ user.first_name }} {{ user.last_name }}{% endblock %}
+
+{% block content %}
+    <div class="col-lg-4"></div>
+    <div class="col-lg-4">
+        <div class="card">
+            <img src="{{ user.Image.url }}" alt="">
+            <div class="card-body">
+                <h5 class="card-title">
+                    <span class="card-title">{{ user.first_name }} {{ user.last_name }}</span>
+                </h5>
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="info-tab" data-bs-toggle="tab"
+                                data-bs-target="#info-tab-pane" type="button" role="tab" aria-controls="info-tab-pane"
+                                aria-selected="true">Info
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="images-tab" data-bs-toggle="tab"
+                                data-bs-target="#images-tab-pane" type="button" role="tab"
+                                aria-controls="images-tab-pane" aria-selected="false">Images
+                        </button>
+                    </li>
+                </ul>
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="info-tab-pane" role="tabpanel" aria-labelledby="info-tab"
+                         tabindex="0">
+                        <dl class="dl-horizontal">
+                            <dt>Id:</dt>
+                            <dd>{{ user.id }}</dd>
+                            <dt>Email Address:</dt>
+                            <dd>{{ user.e_mail }}</dd>
+                            <dt>Phone Number:</dt>
+                            <dd>{{ user.phone }}</dd>
+                            <dt>birthdate:</dt>
+                            <dd>{{ user.birth_date }}</dd>
+                            <dt>Address:</dt>
+                            <dd>{{ user.address }}</dd>
+                        </dl>
+                    </div>
+                    <div class="tab-pane fade" id="images-tab-pane" role="tabpanel" aria-labelledby="images-tab"
+                         tabindex="0">
+                        {% for image in user.image_set.all %}
+                            {% with 'photos/'|add:image as image_static %}
+                                <img src="/{{ image.Image }}" alt="{{ image.Image }}" class="w-100">
+                            {% endwith %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
